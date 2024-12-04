@@ -5,6 +5,7 @@ import java.util.Random;
 
 import se.lexicon.exceptions.workshop.domain.Gender;
 import se.lexicon.exceptions.workshop.domain.Person;
+import se.lexicon.exceptions.workshop.exception.DuplicateNameException;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
 
 public class NameService {
@@ -63,6 +64,10 @@ public class NameService {
      * @param name
      */
     public void addFemaleFirstName(String name) {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name should not be null or empty!");
+        if (femaleFirstNames.contains(name))
+            throw new DuplicateNameException("Sorry! could not add (" + name + ") " + "already exists in list!");
+
         femaleFirstNames.add(name);
         CSVReader_Writer.saveFemaleNames(femaleFirstNames);
 
@@ -76,6 +81,10 @@ public class NameService {
      * @param name
      */
     public void addMaleFirstName(String name) {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name should not be null or empty!");
+        if (maleFirstNames.contains(name))
+            throw new DuplicateNameException("Sorry! could not add (" + name + ") " + "already exists in list!");
+
         maleFirstNames.add(name);
         CSVReader_Writer.saveMaleNames(maleFirstNames);
     }
@@ -88,6 +97,11 @@ public class NameService {
      * @param lastName
      */
     public void addLastName(String lastName) {
+        if (lastName == null || lastName.isEmpty())
+            throw new IllegalArgumentException("LastName should not be null or empty!");
+        if (lastNames.contains(lastName))
+            throw new DuplicateNameException("Sorry! could not add (" + lastName + ") " + "already exists in list!");
+
         lastNames.add(lastName);
         CSVReader_Writer.saveLastNames(lastNames);
     }
